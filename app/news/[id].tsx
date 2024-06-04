@@ -1,17 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
+import Markdown from "react-native-markdown-display";
 import { ChevronLeft, Send } from "lucide-react-native";
 
 import { Loading } from "@/components/loading";
+import { NewsProps } from "@/types/news";
+
+const newsMock: Partial<NewsProps> = {
+  id: "1",
+  titulo: "🌊 Oceano em Foco",
+  descricao: "Impactos das Mudanças Climáticas nos Ecossistemas Marinhos",
+  conteudo:
+    "Uma pesquisa recente conduzida por cientistas do Instituto de Estudos Oceânicos (IEO) revelou dados alarmantes sobre os efeitos das mudanças climáticas nos ecossistemas marinhos. A investigação, que analisou as águas do Atlântico Sul ao longo de cinco anos, destacou a drástica diminuição de populações de peixes e o branqueamento acelerado de corais.\n\nEspécies como o atum-rabilho e o bacalhau têm sofrido reduções significativas em suas populações devido ao aquecimento das águas e à acidificação dos oceanos.\n\n### Acordo Internacional para Proteção dos Oceanos\n\nEm resposta aos crescentes desafios ambientais, líderes mundiais se reuniram na Cúpula do Oceano, em Lisboa, para assinar um acordo histórico voltado para a proteção e preservação dos mares. Este tratado visa reduzir a poluição plástica, promover práticas de pesca sustentável e expandir áreas marinhas protegidas.",
+  data: "2024-06-01T12:00:00Z",
+};
 
 export default function NewsScreen() {
   const { id } = useLocalSearchParams();
   const router = useNavigation();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [news, setNews] = useState<Partial<NewsProps> | null>(null);
+
+  useEffect(() => {
+    // getNews()
+    setNews(newsMock);
+
+    setLoading(false);
+  }, []);
+
+  // async function getNews() {
+  //   const { data } = await axios.get(`https://localhost:8080/noticias/${id}`);
+
+  //   setNews(data);
+  // }
 
   return (
     <View className="flex-1">
@@ -56,27 +81,12 @@ export default function NewsScreen() {
             />
 
             <View className="flex-1 w-full mt-8">
-              <Text className="text-2xl text-white font-medium mb-2">🌊 Oceano em Foco</Text>
-              <Text className="text-lg text-white">Impactos das Mudanças Climáticas nos Ecossistemas Marinhos</Text>
+              <Text className="text-2xl text-white font-medium mb-2">{news!.titulo}</Text>
+              <Text className="text-lg text-white">{news!.descricao}</Text>
 
               <View className="w-full h-px bg-[#0487D9] my-4" />
 
-              <Text className="text-white mb-1 text-base">
-                Uma pesquisa recente conduzida por cientistas do Instituto de Estudos Oceânicos (IEO) revelou dados alarmantes sobre os
-                efeitos das mudanças climáticas nos ecossistemas marinhos. A investigação, que analisou as águas do Atlântico Sul ao longo
-                de cinco anos, destacou a drástica diminuição de populações de peixes e o branqueamento acelerado de corais.
-              </Text>
-              <Text className="text-white mb-1 text-base">
-                Espécies como o atum-rabilho e o bacalhau têm sofrido reduções significativas em suas populações devido ao aquecimento das
-                águas e à acidificação dos oceanos.
-              </Text>
-              <Text className="text-white mb-1 mt-2 text-lg font-medium">Acordo Internacional para Proteção dos Oceanos</Text>
-
-              <Text className="text-white mb-1 text-base">
-                Em resposta aos crescentes desafios ambientais, líderes mundiais se reuniram na Cúpula do Oceano, em Lisboa, para assinar um
-                acordo histórico voltado para a proteção e preservação dos mares. Este tratado visa reduzir a poluição plástica, promover
-                práticas de pesca sustentável e expandir áreas marinhas protegidas.
-              </Text>
+              <Markdown style={markdownStyles}>{news!.conteudo}</Markdown>
             </View>
           </View>
         </ScrollView>
@@ -84,3 +94,16 @@ export default function NewsScreen() {
     </View>
   );
 }
+
+const markdownStyles = {
+  body: {
+    color: "#FFFFFF",
+  },
+  paragraph: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  heading3: {
+    marginBottom: 10,
+  },
+};

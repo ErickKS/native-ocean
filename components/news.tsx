@@ -2,17 +2,11 @@ import { View, Text, ImageBackground } from "react-native";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Link } from "expo-router";
-
-interface NewsProps {
-  id: string;
-  title: string;
-  description: string;
-  time: string;
-}
+import { NewsProps } from "@/types/news";
 
 const image = require("../assets/images/news.jpg");
 
-export function News({ id, title, description, time }: NewsProps) {
+export function News({ id, title, description, date }: Partial<NewsProps>) {
   function calcularTempoPassado(isoDate: string) {
     const data = new Date(isoDate);
     const distance = formatDistanceToNow(data, { addSuffix: true, locale: ptBR });
@@ -31,7 +25,7 @@ export function News({ id, title, description, time }: NewsProps) {
             {description}
           </Text>
 
-          <Text className="text-sm text-[#0487D9] font-medium mt-auto">{calcularTempoPassado(time)}</Text>
+          {date && <Text className="text-sm text-[#0487D9] font-medium mt-auto">{calcularTempoPassado(date)}</Text>}
         </View>
       </View>
     </Link>
