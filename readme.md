@@ -20,7 +20,7 @@
 ## 📚 Projeto
 
 <p>Nosso projeto visa criar um aplicativo de notícias para atender ao desafio proposto pelo Global Solution FIAP - 2024</p>
-<p>Com nosso app, você pode se inscrever para receber as últimas notícias diretamente em sua caixa de entrada através de nossa newsletter.</p>
+<p>Com nosso app, você pode se inscrever para receber as últimas notícias diretamente em seu e-mail por meio de nossa newsletter ou acessar todas as notícias diretamente no aplicativo.</p>
 
 <br/>
 
@@ -36,7 +36,8 @@
 
 ## 🧾 Funcionalidades
 
-- [x] Cadastro através da conta do Google e Apple.
+- [x] Acesso às notícias mais recentes.
+- [x] Cadastro na newsletter através da conta do Google ou Apple.
 - [x] [API Doc](https://github.com/ErickKS/native-ocean/blob/main/api.md)
 
 <br/>
